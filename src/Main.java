@@ -6,21 +6,21 @@ public class Main {
         int[][] sala = {
                 {7, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 5, 4},
                 {7, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 7},
-                {7, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 8, 8, 8, 8, 7},
+                {7, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 7},
                 {7, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 7},
                 {7, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 7},
                 {7, 4, 5, 4, 5, 6, 2, 2, 7, 2, 2, 6, 1, 5, 4, 6, 7},
                 {7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7},
-                {7, 8, 8, 1, 1, 1, 1, 1, 7, 1, 8, 8, 1, 1, 1, 1, 7},
-                {7, 1, 1, 1, 8, 8, 8, 8, 7, 1, 1, 1, 8, 8, 8, 8, 7},
+                {7, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 7},
+                {7, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 7},
                 {7, 6, 6, 3, 5, 5, 3, 3, 5, 1, 5, 3, 3, 5, 1, 6, 7},
                 {7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7},
-                {1, 1, 1, 1, 8, 8, 1, 1, 7, 1, 1, 8, 8, 1, 6, 2, 2},
+                {1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 6, 2, 2},
                 {7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7},
                 {0},
         };
 
-        String fileira = "NLKJIHGFEDCBA ";
+        String fileira = "LKJIHGFEDCBA  ";
 
         int opcaoIngresso = exibeOpcoesIngresso();
         exibeSala(sala, fileira);
@@ -51,16 +51,56 @@ public class Main {
     }
 
     public static void exibeSala(int[][] sala, String fileira) {
-        System.out.println("Disponibilidade de lugares na sala: \n");
-        System.out.println("Legenda: C: CONDIÇÃO | 8 - Ocupado | 1 - Normal | 2 - Conforto | 3 - Pessoa com Deficiência | 4 - Obeso | 5 - Acompanhante | 6 - área indisponível | 7 - corredor \n");
+        final String ANSI_RESET = "\u001B[0m";
+        final String ANSI_RED_BACKGROUND = "\u001B[41m";
+        final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+        final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
+        final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+        final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
+        final String ANSI_BRIGHT_BLACK_BACKGROUND = "\u001B[100m";
+
+        System.out.println("\nDisponibilidade de lugares na sala:");
+        System.out.println("Legenda:");
+        System.out.printf("%s Ocupado %s | %s Normal %s | %s Conforto %s | %s Pessoa com Deficiência %s | %s Obeso %s | %s Acompanhante %s\n",
+                ANSI_RED_BACKGROUND, ANSI_RESET, ANSI_GREEN_BACKGROUND, ANSI_RESET, ANSI_BLUE_BACKGROUND, ANSI_RESET, ANSI_PURPLE_BACKGROUND, ANSI_RESET, ANSI_YELLOW_BACKGROUND, ANSI_RESET, ANSI_BRIGHT_BLACK_BACKGROUND, ANSI_RESET);
+        System.out.println();
 
         for (int i = 0; i < sala.length; i++) {
             System.out.print(fileira.charAt(i) + " ");
             for (int j = 0; j < sala[i].length; j++) {
                 if (i == sala.length - 1) {
-                    System.out.println("_______________________________________________________________________________________________TELA__________________________________________________________________________________________________");
+                    System.out.println("____________________________________________________TELA____________________________________________________");
                 } else {
-                    System.out.print(" |" + (j) + fileira.charAt(i) + " C: " + sala[i][j] + "| ");
+                    switch (sala[i][j]) {
+                        case 1:
+                            System.out.print(" |" + ANSI_GREEN_BACKGROUND + (j) + fileira.charAt(i) + ANSI_RESET + "| ");
+                            break;
+                        case 2:
+                            System.out.print(" |" + ANSI_BLUE_BACKGROUND + (j) + fileira.charAt(i) + ANSI_RESET + "| ");
+                            break;
+                        case 3:
+                            System.out.print(" |" + ANSI_PURPLE_BACKGROUND + (j) + fileira.charAt(i) + ANSI_RESET + "| ");
+                            break;
+                        case 4:
+                            System.out.print(" |" + ANSI_YELLOW_BACKGROUND + (j) + fileira.charAt(i) + ANSI_RESET + "| ");
+                            break;
+                        case 5:
+                            System.out.print(" |" + ANSI_BRIGHT_BLACK_BACKGROUND + (j) + fileira.charAt(i) + ANSI_RESET + "| ");
+                            break;
+                        case 6:
+                        case 7:
+                            if (j < 10) {
+                                System.out.print("      ");
+                            } else {
+                                System.out.print("       ");
+                            }
+                            break;
+                        case 8:
+                            System.out.print(" |" + ANSI_RED_BACKGROUND + (j) + fileira.charAt(i) + ANSI_RESET + "| ");
+                            break;
+                        default:
+                            System.out.print(" |" + (j) + fileira.charAt(i) + "| ");
+                    }
                 }
             }
             System.out.print(" " + fileira.charAt(i) + "\n");
@@ -81,45 +121,51 @@ public class Main {
         int categoriaPoltronaSelecionada = sala[fileira.indexOf(letraPoltronaSelecionada)][numeroPoltronaSelecionada];
 
         if (categoriaPoltronaSelecionada == opcaoIngresso) {
+            final String ANSI_RESET = "\u001B[0m";
+            final String ANSI_RED_BACKGROUND = "\u001B[41m";
+            final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+            final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
+            final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+            final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
+            final String ANSI_BRIGHT_BLACK_BACKGROUND = "\u001B[100m";
+
             switch (categoriaPoltronaSelecionada) {
                 case 1:
-                    System.out.println("Você acabou de adquirir um ingresso para a categoria: 1 - Normal.");
+                    System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sNormal%s.", ANSI_GREEN_BACKGROUND, ANSI_RESET);
                     break;
                 case 2:
-                    System.out.println("Você acabou de adquirir um ingresso para a categoria: 2 - Conforto.");
+                    System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sConforto%s.", ANSI_BLUE_BACKGROUND, ANSI_RESET);
                     break;
                 case 3:
-                    System.out.println("Você acabou de adquirir um ingresso para a categoria: 3 - Pessoa com Deficiência.");
+                    System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sPessoa com Deficiência%s.", ANSI_PURPLE_BACKGROUND, ANSI_RESET);
                     break;
                 case 4:
-                    System.out.println("Você acabou de adquirir um ingresso para a categoria: 4 - Obeso.");
+                    System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sObeso%s.", ANSI_YELLOW_BACKGROUND, ANSI_RESET);
                     break;
                 case 5:
-                    System.out.println("Você acabou de adquirir um ingresso para a categoria: 5 - Acompanhante.");
+                    System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sAcompanhante%s.", ANSI_BRIGHT_BLACK_BACKGROUND, ANSI_RESET);
                     break;
                 default:
-                    System.out.println("Ops, não encontramos a categoria desejada!");
+                    System.out.printf("%sOps, não encontramos a categoria desejada!%s", ANSI_RED_BACKGROUND, ANSI_RESET);
             }
-
-            System.out.println("\n" + "Confira sua poltrona selecionada: " + numeroPoltronaSelecionada + letraPoltronaSelecionada);
+            System.out.printf(" Confira sua poltrona selecionada: %s" + numeroPoltronaSelecionada + letraPoltronaSelecionada + "%s \n", ANSI_RED_BACKGROUND, ANSI_RESET);
             sala[fileira.indexOf(letraPoltronaSelecionada)][numeroPoltronaSelecionada] = 8;
         } else {
             if (categoriaPoltronaSelecionada == 8) {
-                System.out.println("Lamentamos, mas a poltrona " + letraPoltronaSelecionada + numeroPoltronaSelecionada + " já está ocupada!");
+                System.out.println("Lamentamos, mas a poltrona " + numeroPoltronaSelecionada + letraPoltronaSelecionada + " já está ocupada!");
             } else if (categoriaPoltronaSelecionada == 6 || categoriaPoltronaSelecionada == 7) {
                 System.out.println("Lamentamos, mas esta categoria não está disponível para compra.");
             } else {
-                System.out.println("Lamentamos, mas a poltrona " + letraPoltronaSelecionada + numeroPoltronaSelecionada + " não é compátivel com a categoria do seu ingresso.");
+                System.out.println("Lamentamos, mas a poltrona " + numeroPoltronaSelecionada + letraPoltronaSelecionada + " não é compátivel com a categoria do seu ingresso.");
             }
         }
-        System.out.print("\n");
         return sala;
     }
 
     public static void novoIngresso(int[][] sala, String fileira) {
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Deseja continuar comprando? Se sim, digite 1, senão digite 0");
+        System.out.println("Deseja continuar comprando? Se sim: digite 1 | Se não: digite 0");
         int continuarCompra = scan.nextInt();
 
         if (continuarCompra == 1) {
