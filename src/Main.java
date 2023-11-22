@@ -1,6 +1,13 @@
 import java.util.Scanner;
 
 public class Main {
+    static final String ANSI_RESET = "\u001B[0m";
+    static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+    static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+    static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
+    static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+    static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
+    static final String ANSI_BRIGHT_BLACK_BACKGROUND = "\u001B[100m";
 
     public static void main(String[] args) {
         int[][] sala = {
@@ -51,13 +58,6 @@ public class Main {
     }
 
     public static void exibeSala(int[][] sala, String fileira) {
-        final String ANSI_RESET = "\u001B[0m";
-        final String ANSI_RED_BACKGROUND = "\u001B[41m";
-        final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
-        final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
-        final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
-        final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
-        final String ANSI_BRIGHT_BLACK_BACKGROUND = "\u001B[100m";
 
         System.out.println("\nDisponibilidade de lugares na sala:");
         System.out.println("Legenda:");
@@ -121,14 +121,6 @@ public class Main {
         int categoriaPoltronaSelecionada = sala[fileira.indexOf(letraPoltronaSelecionada)][numeroPoltronaSelecionada];
 
         if (categoriaPoltronaSelecionada == opcaoIngresso) {
-            final String ANSI_RESET = "\u001B[0m";
-            final String ANSI_RED_BACKGROUND = "\u001B[41m";
-            final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
-            final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
-            final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
-            final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
-            final String ANSI_BRIGHT_BLACK_BACKGROUND = "\u001B[100m";
-
             switch (categoriaPoltronaSelecionada) {
                 case 1:
                     System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sNormal%s.", ANSI_GREEN_BACKGROUND, ANSI_RESET);
