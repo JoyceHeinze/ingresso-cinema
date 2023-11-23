@@ -27,7 +27,7 @@ public class Main {
                 {0},
         };
 
-        String fileira = "LKJIHGFEDCBA  ";
+        String fileira = "JIHGFE DCB A  ";
 
         int opcaoIngresso = exibeOpcoesIngresso();
         exibeSala(sala, fileira);
@@ -42,17 +42,23 @@ public class Main {
         System.out.println("Por favor, informe a numeração da categoria de ingresso desejada:");
         System.out.println("1: Normal | 2: Conforto | 3: Pessoa com Deficiência | 4: Obeso | 5: Acompanhante");
 
-        int categoriaEscolhida = scan.nextInt();
+        try {
+            int categoriaEscolhida = scan.nextInt();
 
-        switch (categoriaEscolhida) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-                return categoriaEscolhida;
-            default:
-                System.out.println("Ops! Não foi possível encontrar uma poltrona para a categoria desejada.");
+            switch (categoriaEscolhida) {
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                    return categoriaEscolhida;
+                default:
+                    System.out.println("\nOps! Não foi possível encontrar a categoria desejada. Vamos tentar novamente: \n");
+                    exibeOpcoesIngresso();
+            }
+        } catch (Exception e) {
+            System.out.println("\nOps! Esta categoria não é válida. Vamos tentar novamente: \n");
+            exibeOpcoesIngresso();
         }
         return 0;
     }
@@ -110,46 +116,47 @@ public class Main {
     public static int[][] selecionaPoltrona(int[][] sala, String fileira, int opcaoIngresso) {
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Por favor, selecione o número da poltrona desejada:");
-        int numeroPoltronaSelecionada = scan.nextInt();
+        try {
+            System.out.println("Por favor, selecione o número da poltrona desejada:");
+            int numeroPoltronaSelecionada = scan.nextInt();
+            System.out.println("Por favor, selecione a letra da poltrona desejada:");
+            String letraPoltronaSelecionada = scan.next().toUpperCase();
 
-        System.out.println("Por favor, selecione a letra da poltrona desejada:");
-        String letraPoltronaSelecionada = scan.next().toUpperCase();
+            int categoriaPoltronaSelecionada = sala[fileira.indexOf(letraPoltronaSelecionada)][numeroPoltronaSelecionada];
+            System.out.print("\n");
 
-        System.out.print("\n");
-
-        int categoriaPoltronaSelecionada = sala[fileira.indexOf(letraPoltronaSelecionada)][numeroPoltronaSelecionada];
-
-        if (categoriaPoltronaSelecionada == opcaoIngresso) {
-            switch (categoriaPoltronaSelecionada) {
-                case 1:
-                    System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sNormal%s.", ANSI_GREEN_BACKGROUND, ANSI_RESET);
-                    break;
-                case 2:
-                    System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sConforto%s.", ANSI_BLUE_BACKGROUND, ANSI_RESET);
-                    break;
-                case 3:
-                    System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sPessoa com Deficiência%s.", ANSI_PURPLE_BACKGROUND, ANSI_RESET);
-                    break;
-                case 4:
-                    System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sObeso%s.", ANSI_YELLOW_BACKGROUND, ANSI_RESET);
-                    break;
-                case 5:
-                    System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sAcompanhante%s.", ANSI_BRIGHT_BLACK_BACKGROUND, ANSI_RESET);
-                    break;
-                default:
-                    System.out.printf("%sOps, não encontramos a categoria desejada!%s", ANSI_RED_BACKGROUND, ANSI_RESET);
-            }
-            System.out.printf(" Confira sua poltrona selecionada: %s" + numeroPoltronaSelecionada + letraPoltronaSelecionada + "%s \n", ANSI_RED_BACKGROUND, ANSI_RESET);
-            sala[fileira.indexOf(letraPoltronaSelecionada)][numeroPoltronaSelecionada] = 8;
-        } else {
-            if (categoriaPoltronaSelecionada == 8) {
-                System.out.println("Lamentamos, mas a poltrona " + numeroPoltronaSelecionada + letraPoltronaSelecionada + " já está ocupada!");
-            } else if (categoriaPoltronaSelecionada == 6 || categoriaPoltronaSelecionada == 7) {
-                System.out.println("Lamentamos, mas esta categoria não está disponível para compra.");
+            if (categoriaPoltronaSelecionada == opcaoIngresso) {
+                switch (categoriaPoltronaSelecionada) {
+                    case 1:
+                        System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sNormal%s.", ANSI_GREEN_BACKGROUND, ANSI_RESET);
+                        break;
+                    case 2:
+                        System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sConforto%s.", ANSI_BLUE_BACKGROUND, ANSI_RESET);
+                        break;
+                    case 3:
+                        System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sPessoa com Deficiência%s.", ANSI_PURPLE_BACKGROUND, ANSI_RESET);
+                        break;
+                    case 4:
+                        System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sObeso%s.", ANSI_YELLOW_BACKGROUND, ANSI_RESET);
+                        break;
+                    case 5:
+                        System.out.printf("Você acabou de adquirir um ingresso para a categoria: %sAcompanhante%s.", ANSI_BRIGHT_BLACK_BACKGROUND, ANSI_RESET);
+                        break;
+                }
+                System.out.printf(" Confira sua poltrona selecionada: %s" + numeroPoltronaSelecionada + letraPoltronaSelecionada + "%s \n", ANSI_RED_BACKGROUND, ANSI_RESET);
+                sala[fileira.indexOf(letraPoltronaSelecionada)][numeroPoltronaSelecionada] = 8;
             } else {
-                System.out.println("Lamentamos, mas a poltrona " + numeroPoltronaSelecionada + letraPoltronaSelecionada + " não é compátivel com a categoria do seu ingresso.");
+                if (categoriaPoltronaSelecionada == 8) {
+                    System.out.println("Lamentamos, mas a poltrona " + numeroPoltronaSelecionada + letraPoltronaSelecionada + " já está ocupada!");
+                } else if (categoriaPoltronaSelecionada == 6 || categoriaPoltronaSelecionada == 7) {
+                    System.out.println("Lamentamos, mas esta categoria não está disponível para compra.");
+                } else {
+                    System.out.println("Lamentamos, mas a poltrona " + numeroPoltronaSelecionada + letraPoltronaSelecionada + " não é compátivel com a categoria do seu ingresso.");
+                }
             }
+        } catch (Exception e) {
+            System.out.println("\nLamentamos, mas não foi possível encontrar a poltrona desejada.\n");
+            novoIngresso(sala, fileira);
         }
         return sala;
     }
@@ -157,17 +164,28 @@ public class Main {
     public static void novoIngresso(int[][] sala, String fileira) {
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Deseja continuar comprando? Se sim: digite 1 | Se não: digite 0");
-        int continuarCompra = scan.nextInt();
+        try {
+            System.out.println("Deseja continuar comprando? Se sim: digite 1 | Se não: digite 0");
+            int continuarCompra = scan.nextInt();
 
-        if (continuarCompra == 1) {
-            int opcaoIngresso = exibeOpcoesIngresso();
-            exibeSala(sala, fileira);
-            sala = selecionaPoltrona(sala, fileira, opcaoIngresso);
-            exibeSala(sala, fileira);
+            switch (continuarCompra) {
+                case 0:
+                    System.out.println("Agradecemos e esperamos que tenha aproveitado a experiência! até a próxima :)");
+                    System.exit(0);
+                case 1:
+                    int opcaoIngresso = exibeOpcoesIngresso();
+                    exibeSala(sala, fileira);
+                    sala = selecionaPoltrona(sala, fileira, opcaoIngresso);
+                    exibeSala(sala, fileira);
+                    novoIngresso(sala, fileira);
+                    break;
+                default:
+                    System.out.println("Ops! Não entendi, vamos tentar novamente...");
+                    novoIngresso(sala, fileira);
+            }
+        } catch (Exception e) {
+            System.out.println("Ops! Não entendi, vamos tentar novamente...");
             novoIngresso(sala, fileira);
-        } else if (continuarCompra == 0) {
-            System.out.println("Agradecemos e esperamos que tenha aproveitado a experiência! até a próxima :)");
         }
     }
 }
